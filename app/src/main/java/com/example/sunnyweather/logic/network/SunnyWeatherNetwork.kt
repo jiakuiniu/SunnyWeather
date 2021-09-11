@@ -1,9 +1,9 @@
 package com.example.sunnyweather.logic.network
 
+import com.example.sunnyweather.logic.model.RealtimeResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.await
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -13,9 +13,15 @@ import kotlin.coroutines.suspendCoroutine
  */
 object SunnyWeatherNetwork {
 
-    private val placeService=ServiceCreator.create(PlaceService::class.java) //创建动态代理对象
+    private val placeService=ServiceCreator.create(PlaceService::class.java) //创建城市动态代理对象
+
+    private val weatherService=ServiceCreator.create(WeatherService::class.java) //创建天气动态代理对象
 
     suspend fun searchPlaces(query:String) = placeService.searchPlaces(query).await() //发起搜索城市数据请求
+
+    suspend fun getDailyWeather(lng:String,lat:String)=weatherService.getDailyWeather(lng,lat).await()
+
+    suspend fun getRealtimeWeather(lng:String,lat:String): RealtimeResponse =weatherService.getRealtimeWeather(lng,lat).await()
 
     /**
      * 当外部调用SunnyWeatherNetwork的searchPlaces()函数时，Retrofit就会立即发起网络请求
