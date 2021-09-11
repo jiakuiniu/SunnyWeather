@@ -36,6 +36,8 @@ class PlaceFragment :Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         /**
+         * 只有PlaceFragment被嵌入MainActivity中，并且之前已经存在选中的城市，才会跳转
+         *
          * 如果当前已有存储的城市数据，那么就获得已存储的城市数据并解析成Place对象
          * 并使用它的经纬度坐标和城市名直接跳转并传给WeatherActivity
          */
